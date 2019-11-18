@@ -61,45 +61,24 @@ public class BallController : MonoBehaviour
 		axis.x = Input.GetAxisRaw("Horizontal");														
 		axis.y = Input.GetAxisRaw("Vertical");
 
-		//CamDirection();
-		//Move();
+		Vector3 forward = transform.position - cameraPosition.position;
+        forward.y = 0;
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-		Vector3 dir = transform.position - cameraPosition.position;
-		dir.y = 0;
 
-		if(dir.normalized != transform.forward.normalized)
-		{
-			if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-			{
-				transform.rotation = Quaternion.LookRotation(dir);
-				rotating = true;
-			}
-			else if (Input.GetAxis("Horizontal") == 0 || Input.GetAxis("Vertical") == 0)
-			{
-				rotating = false;
-			}
-		}
-		/*
-		IsJumping();
+        moveDirection = (forward * axis.y) + (right * axis.x);
 
-		if (!IsJumping)
-		{
-			Jump();
-		}
-		else
-		{
-			jumpSpeed -= gravity * Time.deltaTime;
-		}
-		*/
 
-		Debug.DrawRay(transform.position, dir, Color.blue);
-		Debug.DrawRay(transform.position, transform.forward, Color.green);
 
-		//Vector de movimiento
-		moveDirection = new Vector3 (dir.normalized.x * axis.x, 0.0f, axis.y);
+        Debug.DrawRay(transform.position, forward, Color.blue);
+		Debug.DrawRay(transform.position, right, Color.green);
+        Debug.DrawRay(transform.position, Vector3.up, Color.red);
 
-		//Añadir fuerza al Rigidbody(movimiento basado en fisicas)
-		rb.AddForce(moveDirection * currentSpeed);
+        //Vector de movimiento
+        //moveDirection = new Vector3 (dir.normalized.x * axis.x, 0.0f, axis.y);
+
+        //Añadir fuerza al Rigidbody(movimiento basado en fisicas)
+        rb.AddForce(moveDirection * currentSpeed);
 		//myTransform.Translate(moveDirection * speed, Space.Self);
 	}
 }

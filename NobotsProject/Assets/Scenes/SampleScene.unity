@@ -186,7 +186,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38431762}
-  m_LocalRotation: {x: 0.10416349, y: 0.0000000068281643, z: -7.1546413e-10, w: 0.99456024}
+  m_LocalRotation: {x: 0.10416349, y: -0.0000000068566512, z: 7.177903e-10, w: 0.99456024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -759,7 +759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &729738335
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1066,7 +1066,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.1041635, y: 0.000000030416526, z: -0.0000000031856207, w: 0.99456024}
+  m_LocalRotation: {x: 0.1041635, y: -0.000000030422953, z: 0.0000000031862937, w: 0.99456024}
   m_LocalPosition: {x: 0, y: 31.05, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1223,6 +1223,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8720268314146095897, guid: d9211380d68e7744b9359af05fa3f64f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4296620518234803949, guid: d9211380d68e7744b9359af05fa3f64f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1232,11 +1237,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MaxTurboBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 8720268314146095897, guid: d9211380d68e7744b9359af05fa3f64f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4296620517451198037, guid: d9211380d68e7744b9359af05fa3f64f,
         type: 3}
@@ -2037,8 +2037,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 240308217}
-  baseSpeed: 10
-  maxSpeed: 50
+  baseSpeed: 2
+  maxSpeed: 4
   speedIncrease: 0.2
   speedDecay: 1
   currentSpeed: 0
@@ -2184,7 +2184,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071267896}
-  m_LocalRotation: {x: 0.08720059, y: 0.0000000084209715, z: -7.3720435e-10, w: 0.9961908}
+  m_LocalRotation: {x: 0.08720058, y: 0.0000000084209715, z: -7.372043e-10, w: 0.9961908}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
