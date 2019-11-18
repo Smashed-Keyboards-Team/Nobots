@@ -10,7 +10,7 @@ public class HUD : MonoBehaviour
     public GameObject pausePanel;
 	public Text velocimetro;
 
-	public float speed;
+	//public float speed;
 
 	/*
 	void Update()
@@ -20,14 +20,14 @@ public class HUD : MonoBehaviour
 	}
 	*/
 
-
+	//Modificar barra de turbo
     public void SetTurboBar(float turbo)
     {
-        turboBar.fillAmount = turbo;
+        turboBar.fillAmount = turbo * 2;
     }
 
-	
-    public void OpenPausePanel(bool open)                           // Abre el panel de pausa
+	//Abrir el panel de pausa
+    public void OpenPausePanel(bool open)                           
     {
         pausePanel.SetActive(open);
     }

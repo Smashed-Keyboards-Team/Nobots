@@ -15,8 +15,6 @@ public class BallController : MonoBehaviour
 
 	public GameManager gm;
 
-	private bool rotating;
-
 	public float baseSpeed;
 	public float maxSpeed;
 	public float speedIncrease;
@@ -39,13 +37,16 @@ public class BallController : MonoBehaviour
 
     void FixedUpdate ()
 	{	
+		//Funcionamiento del turbo
 		if(Input.GetButton("Jump"))
 		{
 			if (currentSpeed <= maxSpeed && gm.turbo > 1)
 			{
 				currentSpeed = currentSpeed + speedIncrease;
 				Debug.Log("turbo on");
+				gm.turboCurrentCd = 0;
 				gm.Turbo();
+
 			}
 		}
 		else
@@ -56,29 +57,36 @@ public class BallController : MonoBehaviour
 				Debug.Log("turbo off");
 			}
 		}
+
+		//Ajustes de velocidad maxima y minima
+		if (currentSpeed > maxSpeed)
+		{
+			currentSpeed = maxSpeed;
+		}
+		if (currentSpeed < baseSpeed)
+		{
+			currentSpeed = baseSpeed;
+		}
 		
 		//Inputs de movimiento en X y Y
 		axis.x = Input.GetAxisRaw("Horizontal");														
 		axis.y = Input.GetAxisRaw("Vertical");
 
+		//Vectores para determinar vector de direccion
 		Vector3 forward = transform.position - cameraPosition.position;
         forward.y = 0;
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
+        //Vector de direccion
+		moveDirection = (forward * axis.y) + (right * axis.x);
 
-        moveDirection = (forward * axis.y) + (right * axis.x);
-
-
-
-        Debug.DrawRay(transform.position, forward, Color.blue);
+        /*
+		Debug.DrawRay(transform.position, forward, Color.blue);
 		Debug.DrawRay(transform.position, right, Color.green);
         Debug.DrawRay(transform.position, Vector3.up, Color.red);
-
-        //Vector de movimiento
-        //moveDirection = new Vector3 (dir.normalized.x * axis.x, 0.0f, axis.y);
+		*/
 
         //Añadir fuerza al Rigidbody(movimiento basado en fisicas)
-        rb.AddForce(moveDirection * currentSpeed);
-		//myTransform.Translate(moveDirection * speed, Space.Self);
+        rb.AddForce(moveDirection.normalized * currentSpeed);
 	}
 }

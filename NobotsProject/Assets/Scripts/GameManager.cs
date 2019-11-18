@@ -11,18 +11,32 @@ public class GameManager : MonoBehaviour
     public GameObject pausePanel;
     private bool pause;
 
+	public float turboCurrentCd;
+	public float turboCd;
+
     void Start()
     {
         turbo = maxTurbo;
-        hud = FindObjectOfType<HUD>();											//	HUD
+
+		turboCurrentCd = 0;
+
+		//Encontrar HUD
+        hud = FindObjectOfType<HUD>();											
     }
 
 	void Update()
     {
+		//Recarga de turbo
 		if (turbo < maxTurbo)  
 		{
-			turbo = turbo + 0.2f;
+			turboCurrentCd = turboCurrentCd + 1 * Time.deltaTime;
+			if(turboCurrentCd >= turboCd)
+			{
+				turbo = turbo + 0.2f;
+			}
 		}
+		
+		//Ajustes de turbo maximo y minimo
 		if (turbo <= 0)  
 		{
 			turbo = 0;
@@ -33,6 +47,7 @@ public class GameManager : MonoBehaviour
 		}
     }
 
+	//Funcion para gastar turbo
     public void Turbo()
     {
         turbo -= 1;
