@@ -4,42 +4,45 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
-
-
 {
-    public float life;
-    public float maxLife = 100;
+    public float turbo;
+    public float maxTurbo = 100;
     private HUD hud;
     public GameObject pausePanel;
     private bool pause;
 
-    // Start is called before the first frame update
     void Start()
     {
-        life = maxLife;
+        turbo = maxTurbo;
         hud = FindObjectOfType<HUD>();											//	HUD
     }
 
-    private void Update()
+	void Update()
     {
-        /*
-		if (life <= 0)											//Vida
-        {
-            life = 100;
-            GameOver();
-        }
-		*/
+		if (turbo < maxTurbo)  
+		{
+			turbo = turbo + 0.2f;
+		}
+		if (turbo <= 0)  
+		{
+			turbo = 0;
+		}
+		if (turbo >= 100)  
+		{
+			turbo = 100;
+		}
     }
 
-    public void GetDamage(float damage)
+    public void Turbo()
     {
-        life -= damage;
+        turbo -= 1;
 
-        hud.SetLifeBar(life / maxLife);
+        hud.SetTurboBar(turbo / maxTurbo);
     }
 
 	
-    public void SetPause(bool pause)                                        // Funcion de pausa
+	// Funcion de pausa
+    public void SetPause(bool pause)                                        
     {
         this.pause = pause;
 
@@ -54,11 +57,10 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
         }
     }
-	/*
+	
     private void GameOver()
     {
         SceneManager.LoadScene(2);
-    }
-	*/
+    }	
 }
 

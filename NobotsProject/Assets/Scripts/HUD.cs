@@ -6,22 +6,30 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public Image lifeBar;
+    public Image turboBar;
     public GameObject pausePanel;
+	public Text velocimetro;
 
-	void Start()
+	public float speed;
+
+	/*
+	void Update()
 	{
-		
+		speed = BallController.currentSpeed;
+		velocimetro.text = "Speed:" + speed;
 	}
+	*/
 
 
-    public void SetLifeBar(float life)
+    public void SetTurboBar(float turbo)
     {
-        lifeBar.fillAmount = life;
+        turboBar.fillAmount = turbo;
     }
 
+	
     public void OpenPausePanel(bool open)                           // Abre el panel de pausa
     {
         pausePanel.SetActive(open);
     }
+
 }
