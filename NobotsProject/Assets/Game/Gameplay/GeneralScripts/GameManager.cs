@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 	public float turboCurrentCd;
 	public float turboCd;
 
+	public float coreHp = 100;
+
     void Start()
     {
         turbo = maxTurbo;
@@ -45,6 +47,11 @@ public class GameManager : MonoBehaviour
 		{
 			turbo = 100;
 		}
+
+		if (coreHp <= 0)
+		{
+			GameOver();
+		}
     }
 
 	//Funcion para gastar turbo
@@ -55,6 +62,11 @@ public class GameManager : MonoBehaviour
         hud.SetTurboBar(turbo / maxTurbo);
     }
 
+	//Funcion para hacer daño al nucleo
+	public void CoreDamage(float damage)
+    {
+        coreHp -= damage;
+    }
 	
 	// Funcion de pausa
     public void SetPause(bool pause)                                        
@@ -75,7 +87,7 @@ public class GameManager : MonoBehaviour
 	
     private void GameOver()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }	
 }
 

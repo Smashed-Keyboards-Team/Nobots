@@ -43,7 +43,7 @@ public class BallController : MonoBehaviour
 			if (currentSpeed <= maxSpeed && gm.turbo > 1)
 			{
 				currentSpeed = currentSpeed + speedIncrease;
-				Debug.Log("turbo on");
+				//Debug.Log("turbo on");
 				gm.turboCurrentCd = 0;
 				gm.Turbo();
 
@@ -54,7 +54,7 @@ public class BallController : MonoBehaviour
 			if(currentSpeed >= baseSpeed)
 			{
 				currentSpeed = currentSpeed - speedDecay;
-				Debug.Log("turbo off");
+				//Debug.Log("turbo off");
 			}
 		}
 
