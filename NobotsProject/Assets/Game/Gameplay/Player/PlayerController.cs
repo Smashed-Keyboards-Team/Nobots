@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 	private Vector3 centinelMoveDirection;
     private Vector3 desiredDirection;
 
-	[Header("Ball Mode")]
+    [Header("Ball Mode")]
 	public float baseSpeed;
 	public float maxSpeed;
 	public float speedIncrease;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
 		myTransform = transform;
 
-		isBall = false;
+		//isBall = false;
 
 		currentSpeed = baseSpeed;
 	}
@@ -64,9 +64,9 @@ public class PlayerController : MonoBehaviour
 			//Funcionamiento del turbo
 			if(Input.GetButton("Jump"))
 			{
-				if (currentSpeed <= maxSpeed && gm.turbo > 1)
+                if (currentSpeed <= maxSpeed && gm.turbo > 1)
 				{
-					currentSpeed = currentSpeed + speedIncrease;
+                    currentSpeed = currentSpeed + speedIncrease;
 					//Debug.Log("turbo on");
 					gm.turboCurrentCd = 0;
 					gm.Turbo();
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 			{
 				if(currentSpeed >= baseSpeed)
 				{
-					currentSpeed = currentSpeed - speedDecay;
+                    currentSpeed = currentSpeed - speedDecay;
 					//Debug.Log("turbo off");
 				}
 			}
@@ -143,9 +143,10 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             mouseLock.ShowCursor();
             pause = !pause;
-            
+
             gm.SetPause(pause);
         }
         else if (Input.GetKey(KeyCode.Mouse0))

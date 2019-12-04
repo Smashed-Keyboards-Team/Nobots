@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public float turbo;
     public float maxTurbo = 100;
+    private PlayerController playerController;
     private HUD hud;
     public GameObject pausePanel;
     private bool pause;
@@ -18,12 +19,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").
+            GetComponent<PlayerController>();
+
+        //Encontrar HUD
+        hud = FindObjectOfType<HUD>();
+
         turbo = maxTurbo;
 
 		turboCurrentCd = 0;
-
-		//Encontrar HUD
-        hud = FindObjectOfType<HUD>();											
+											
     }
 
 	void Update()

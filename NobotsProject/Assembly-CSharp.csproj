@@ -62,9 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BallController.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\HUD.cs" />
+    <Compile Include="Assets\Game\Gameplay\Enemies\Scripts\CoreScript.cs" />
+    <Compile Include="Assets\Game\Gameplay\GeneralScripts\GameManager.cs" />
+    <Compile Include="Assets\Game\Gameplay\GeneralScripts\HUD.cs" />
+    <Compile Include="Assets\Game\Gameplay\GeneralScripts\MouseLock.cs" />
+    <Compile Include="Assets\Game\Gameplay\GeneralScripts\planetgravity.cs" />
+    <Compile Include="Assets\Game\Gameplay\Player\PlayerController.cs" />
+    <Compile Include="Assets\Game\MainMenu\Scripts\MenuManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Alumnos/Desktop/Nobots/NobotsProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
