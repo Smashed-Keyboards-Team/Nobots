@@ -186,7 +186,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38431762}
-  m_LocalRotation: {x: 0.099882, y: 0.000000008742235, z: -0.0000000026729927, w: 0.99499935}
+  m_LocalRotation: {x: 0.102797076, y: 0.019206654, z: -0.001985279, w: 0.99451494}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -260,7 +260,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147297201}
-  m_LocalRotation: {x: 0.099882, y: -0.000000008460337, z: -1.3518768e-10, w: 0.99499935}
+  m_LocalRotation: {x: 0.102797076, y: 0.019206647, z: -0.0019852784, w: 0.99451494}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1059,7 +1059,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805355223}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 31.05, z: -7}
+  m_LocalPosition: {x: 0.3346763, y: 5.1, z: -1.0949697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 147297203}
@@ -1175,8 +1175,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.09988201, y: 0.000000008560174, z: -8.593639e-10, w: 0.9949993}
-  m_LocalPosition: {x: 0, y: 31.05, z: -7}
+  m_LocalRotation: {x: 0.10279707, y: 0.019206654, z: -0.0019852784, w: 0.99451494}
+  m_LocalPosition: {x: 0.39521027, y: 4.5296226, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1566719643}
@@ -1915,6 +1915,8 @@ GameObject:
   - component: {fileID: 2012834993}
   - component: {fileID: 2012834996}
   - component: {fileID: 2012834992}
+  - component: {fileID: 2012834997}
+  - component: {fileID: 2012834998}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Player
@@ -1930,7 +1932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2012834990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 28.55, z: 0}
+  m_LocalPosition: {x: 0.6, y: 2.6, z: 5.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1948,13 +1950,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaebdac3d96a594893ae01762e00976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBall: 0
+  gravity: -9.81
+  gravityMagnitude: 1
   gm: {fileID: 240308217}
+  centinelSpeed: 5
+  jumpForce: 5
   baseSpeed: 10
   maxSpeed: 50
   speedIncrease: 0.2
   speedDecay: 3
   currentSpeed: 0
-  gravity: 9.81
 --- !u!135 &2012834993
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2030,6 +2036,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!143 &2012834997
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012834990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2012834998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012834990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa134e78c7a6f614eafc12466273029b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2071267896
 GameObject:
   m_ObjectHideFlags: 3
@@ -2096,7 +2132,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071267896}
-  m_LocalRotation: {x: 0.09988201, y: -0.000000008560162, z: 8.59244e-10, w: 0.9949993}
+  m_LocalRotation: {x: 0.102797076, y: 0.019206647, z: -0.0019852777, w: 0.99451494}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
