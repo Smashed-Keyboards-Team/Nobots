@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private HUD hud;
     public GameObject pausePanel;
     private bool pause;
+	private bool dead;
 
 	public float turboCurrentCd;
 	public float turboCd;
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
 
 		if (coreHp <= 0)
 		{
-			GameOver();
+			Victory();
 		}
     }
 
@@ -84,15 +85,21 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0f;                                            // Velocidad del juego
         }
-        else
+        else if(pause == false)
         {
             Time.timeScale = 1f;
         }
     }
 	
-    private void GameOver()
+    public void Victory()
     {
         SceneManager.LoadScene(1);
+    }
+	
+	public void GameOver(bool dead)
+    {
+        this.dead = dead;
+		hud.OpenGameOverPanel(dead);
     }	
 }
 

@@ -6,18 +6,22 @@ public class PlayerController : MonoBehaviour
 {
 	public bool isBall;
 
+	private bool dead = false;
+
 	private Vector2 mouseDirection;
-    private MouseLock mouseLock;
 	private Vector2 axis;
 	private bool pause;
 	public float gravity = Physics.gravity.y;
 	public float gravityMagnitude = 1;
+	public Mesh[] meshes;
 
 	private Transform cameraPosition;
 	private Transform myTransform;
 	private Rigidbody rb;
+	private MeshFilter meshFilter;
 	private CharacterController characterController;
 	public GameManager gm;
+	public HUD hud;
 
 	[Header("Centinel Mode")]
 	public float centinelSpeed;
@@ -40,20 +44,68 @@ public class PlayerController : MonoBehaviour
 
 	void Start ()
 	{
-		//Pillar Rigidbody
+		//Pillar Componentes
 		rb = GetComponent<Rigidbody>();
 		characterController = GetComponent<CharacterController>();
-		mouseLock = GetComponent<MouseLock>();
+		meshFilter = GetComponent<MeshFilter>();
 
-        mouseLock.LockCursor();
+        hud.mouseLock.LockCursor();
 
 		cameraPosition = Camera.main.transform;
 
 		myTransform = transform;
 
-		//isBall = false;
-
 		currentSpeed = baseSpeed;
+	}
+
+	void Update ()
+	{
+		//CONTROL MODO CENTINELA
+		if(isBall == false)
+		{
+			axis.x = Input.GetAxis("Horizontal");
+			axis.y = Input.GetAxis("Vertical");
+
+			mouseDirection.x = Input.GetAxis("Mouse X");
+			mouseDirection.y = Input.GetAxis("Mouse Y");
+
+			if (!jump && characterController.isGrounded)
+			{
+				centinelMoveDirection.y = gravity;
+			}
+			else
+			{
+				jump = false;
+				centinelMoveDirection.y += gravity * gravityMagnitude * Time.deltaTime;
+			}
+
+			desiredDirection = transform.right * axis.x * centinelSpeed + transform.forward * axis.y * centinelSpeed;
+
+			centinelMoveDirection = new Vector3(desiredDirection.x, centinelMoveDirection.y, desiredDirection.z);
+
+			characterController.Move(centinelMoveDirection * Time.deltaTime);
+
+			SetAxis(axis);
+
+			//Cambio de forma
+			if(Input.GetButtonDown("Swap"))
+			{
+				Debug.Log("otako culio");
+				isBall = true;
+				rb.isKinematic = false;
+				meshFilter.mesh = meshes[0];
+			}
+		}
+		
+		
+		//Función de pausa
+		if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            hud.mouseLock.ShowCursor();
+            pause = !pause;
+
+            gm.SetPause(pause);
+        }
 	}
 
     void FixedUpdate ()
@@ -67,7 +119,6 @@ public class PlayerController : MonoBehaviour
                 if (currentSpeed <= maxSpeed && gm.turbo > 1)
 				{
                     currentSpeed = currentSpeed + speedIncrease;
-					//Debug.Log("turbo on");
 					gm.turboCurrentCd = 0;
 					gm.Turbo();
 				}
@@ -77,7 +128,6 @@ public class PlayerController : MonoBehaviour
 				if(currentSpeed >= baseSpeed)
 				{
                     currentSpeed = currentSpeed - speedDecay;
-					//Debug.Log("turbo off");
 				}
 			}
 
@@ -111,47 +161,26 @@ public class PlayerController : MonoBehaviour
 
 			//Añadir fuerza al Rigidbody(movimiento basado en fisicas)
 			rb.AddForce(ballMoveDirection.normalized * currentSpeed);
-		}
-		//CONTROL MODO CENTINELA
-		else
-		{
-			axis.x = Input.GetAxis("Horizontal");
-			axis.y = Input.GetAxis("Vertical");
 
-			mouseDirection.x = Input.GetAxis("Mouse X");
-			mouseDirection.y = Input.GetAxis("Mouse Y");
-
-			if (!jump && characterController.isGrounded)
+			//Cambio de forma
+			if(Input.GetButtonDown("Swap"))
 			{
-				centinelMoveDirection.y = gravity;
+				isBall = false;
+				rb.isKinematic = true;
+				Debug.Log("pinche");
+				meshFilter.mesh = meshes[1];
 			}
-			else
-			{
-				jump = false;
-				centinelMoveDirection.y += gravity * gravityMagnitude * Time.deltaTime;
-				Debug.Log("ae");
-			}
-
-			desiredDirection = transform.right * axis.x * centinelSpeed + transform.forward * axis.y * centinelSpeed;
-
-			centinelMoveDirection = new Vector3(desiredDirection.x, centinelMoveDirection.y, desiredDirection.z);
-
-			characterController.Move(centinelMoveDirection * Time.deltaTime);
-
-			SetAxis(axis);
 		}
+	}
 
-		if (Input.GetKeyDown(KeyCode.Escape))
+	private void OnTriggerEnter(Collider collision)
+	{
+        if (collision.tag == "Bullet")
         {
-
-            mouseLock.ShowCursor();
-            pause = !pause;
-
-            gm.SetPause(pause);
-        }
-        else if (Input.GetKey(KeyCode.Mouse0))
-        {
-            mouseLock.LockCursor();
+			dead = true;
+			hud.mouseLock.ShowCursor();
+			gm.GameOver(dead);
+			Destroy(gameObject);
         }
 	}
 

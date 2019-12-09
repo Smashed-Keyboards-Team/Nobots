@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public void MenuButton()
+    public GameManager gm;
+	private bool pause;
+	public HUD hud;
+
+
+	public void MenuButton()
     {
         SceneManager.LoadScene(1); //Cargar menu principal
     }
@@ -13,10 +18,18 @@ public class MenuManager : MonoBehaviour
     public void PlayButton()
     {
         SceneManager.LoadScene(2); //Cargar gameplay / reiniciar
+		Time.timeScale = 1f; 
     }
 
     public void ExitGame()
     {
         Application.Quit(); //Salir del juego
+    }
+
+	public void ResumeButton()
+    {
+        Time.timeScale = 1f; //Salir del menu al gameplay
+		gm.SetPause(pause);
+		hud.mouseLock.LockCursor();
     }
 }
