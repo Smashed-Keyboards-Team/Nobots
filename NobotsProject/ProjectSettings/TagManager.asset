@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Core
   - Bullet
+  - BouncerUp
   layers:
   - Default
   - TransparentFX

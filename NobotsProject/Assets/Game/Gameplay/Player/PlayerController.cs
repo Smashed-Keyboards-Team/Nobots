@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 	public bool godInvulnerable = false;
 	public bool godFreeMovement = false;
 
+    public BouncerUp bounceUp;
+
 	private Vector2 mouseDirection;
 	private Vector2 axis;
 	private bool pause;
@@ -19,7 +21,7 @@ public class PlayerController : MonoBehaviour
 	public float gravityMagnitude = 1;
 	public Mesh[] meshes;
 
-	private Transform cameraPosition;
+    private Transform cameraPosition;
 	private Transform myTransform;
 	public Rigidbody rb;
 	private MeshFilter meshFilter;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 	public float speedDecay;
 	public float currentSpeed;
 
-	private float moveHorizontal;
+    private float moveHorizontal;
 	private float moveVertical;
 	private Vector3 ballMoveDirection;
 
@@ -64,8 +66,9 @@ public class PlayerController : MonoBehaviour
 
 	void Update ()
 	{
-		//CONTROL MODO CENTINELA
-		if(isBall == false && godFreeMovement == false)
+
+        //CONTROL MODO CENTINELA
+        if (isBall == false && godFreeMovement == false)
 		{
 			axis.x = Input.GetAxis("Horizontal");
 			axis.y = Input.GetAxis("Vertical");
@@ -90,19 +93,27 @@ public class PlayerController : MonoBehaviour
 			characterController.Move(centinelMoveDirection * Time.deltaTime);
 
 			SetAxis(axis);
+        }
 
-			//Cambio de forma
-			if(Input.GetButtonDown("Swap"))
-			{
-				Debug.Log("otako culio");
-				isBall = true;
-				rb.isKinematic = false;
-				meshFilter.mesh = meshes[0];
-			}
-		}
+        //Cambio de forma
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (isBall)
+            {
+                isBall = false;
+                rb.isKinematic = true;
+                meshFilter.mesh = meshes[1];
+            }
+            else
+            {
+                isBall = true;
+                rb.isKinematic = false;
+                meshFilter.mesh = meshes[0];
+            }
+        }
 
-		//MOVIMIENTO FREE GODMODE
-		else if (godFreeMovement == true)
+        //MOVIMIENTO FREE GODMODE
+        else if (godFreeMovement == true)
 		{
 			axis.x = Input.GetAxis("Horizontal");
 			axis.y = Input.GetAxis("Vertical");
@@ -125,6 +136,7 @@ public class PlayerController : MonoBehaviour
 			hud.mouseLock.ShowCursor();
             godPanel.SetActive(true);
         }
+
 	}
 
     void FixedUpdate ()
@@ -137,7 +149,7 @@ public class PlayerController : MonoBehaviour
 			{
                 if (currentSpeed <= maxSpeed && gm.turbo > 1)
 				{
-                    currentSpeed = currentSpeed + speedIncrease;
+                    currentSpeed += speedIncrease;
 					gm.turboCurrentCd = 0;
 					gm.Turbo();
 				}
@@ -146,7 +158,7 @@ public class PlayerController : MonoBehaviour
 			{
 				if(currentSpeed >= baseSpeed)
 				{
-                    currentSpeed = currentSpeed - speedDecay;
+                    currentSpeed -= speedDecay;
 				}
 			}
 
@@ -180,15 +192,6 @@ public class PlayerController : MonoBehaviour
 
 			//Añadir fuerza al Rigidbody(movimiento basado en fisicas)
 			rb.AddForce(ballMoveDirection.normalized * currentSpeed);
-
-			//Cambio de forma
-			if(Input.GetButtonDown("Swap"))
-			{
-				isBall = false;
-				rb.isKinematic = true;
-				Debug.Log("pinche");
-				meshFilter.mesh = meshes[1];
-			}
 		}
 	}
 
@@ -198,9 +201,26 @@ public class PlayerController : MonoBehaviour
         {
 			PlayerDead();
         }
-	}
 
-	public void SetAxis(Vector2 direction)
+       
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "BouncerUp")
+        {
+            GameObject.FindGameObjectsWithTag("BouncerUp");
+            Debug.Log("deberiasaltar");
+            //Rebote (solo vale para 1 cara) modificar
+            if (collision.contactCount == 1)
+            {
+                Vector3 normal = collision.contacts[0].normal;
+                Debug.DrawRay(collision.transform.position, normal, Color.green, 5f);
+                rb.AddForce(normal * bounceUp.bounceForce);
+            }
+        }
+    }
+
+    public void SetAxis(Vector2 direction)
     {
         axis = direction;
     }
