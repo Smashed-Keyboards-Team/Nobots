@@ -51,9 +51,9 @@ public class CoreScript : MonoBehaviour
 		}
 	}
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.tag == "Player")
+        if (collision.transform.tag == "Player")
         {
 			CoreHit();
         }

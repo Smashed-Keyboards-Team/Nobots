@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
 	private Vector2 mouseDirection;
 	private Vector2 axis;
 	private bool pause;
-	public float gravity = Physics.gravity.y;
-	public float gravityMagnitude = 1;
 	public Mesh[] meshes;
 
     private Transform cameraPosition;
@@ -36,6 +34,8 @@ public class PlayerController : MonoBehaviour
 	private bool jump;
 	private Vector3 centinelMoveDirection;
     private Vector3 desiredDirection;
+    public float gravity = Physics.gravity.y;
+    public float gravityMagnitude = 1;
 
     [Header("Ball Mode")]
 	public float baseSpeed;
@@ -184,14 +184,14 @@ public class PlayerController : MonoBehaviour
 			//Vector de direccion
 			ballMoveDirection = (forward * axis.y) + (right * axis.x);
 
-			/*
+            /*
 			Debug.DrawRay(transform.position, forward, Color.blue);
 			Debug.DrawRay(transform.position, right, Color.green);
 			Debug.DrawRay(transform.position, Vector3.up, Color.red);
 			*/
 
-			//Añadir fuerza al Rigidbody(movimiento basado en fisicas)
-			rb.AddForce(ballMoveDirection.normalized * currentSpeed);
+            //Añadir fuerza al Rigidbody(movimiento basado en fisicas)
+            rb.AddForce(ballMoveDirection.normalized * currentSpeed);
 		}
 	}
 
@@ -206,6 +206,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.tag == "Bullet" && gm.win == false && godInvulnerable == false)
+        {
+            PlayerDead();
+        }
+
         if (collision.transform.tag == "BouncerUp")
         {
             GameObject.FindGameObjectsWithTag("BouncerUp");
