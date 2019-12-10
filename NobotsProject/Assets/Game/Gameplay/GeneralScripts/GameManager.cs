@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     public GameObject pausePanel;
     private bool pause;
 	private bool dead;
+	public bool win;
+
+	public float winTime = 3;
+	private float winCounter;
 
 	public float turboCurrentCd;
 	public float turboCd;
@@ -56,7 +60,8 @@ public class GameManager : MonoBehaviour
 
 		if (coreHp <= 0)
 		{
-			Victory();
+			win = true;
+			Win();
 		}
     }
 
@@ -91,9 +96,18 @@ public class GameManager : MonoBehaviour
         }
     }
 	
-    public void Victory()
+    public void Win()
     {
-        SceneManager.LoadScene(1);
+        hud.OpenWinPanel(win);
+		if (winCounter <= winTime)
+		{
+			winCounter += Time.deltaTime;
+		}
+		else
+		{
+			hud.mouseLock.ShowCursor();
+			SceneManager.LoadScene(1);
+		}
     }
 	
 	public void GameOver(bool dead)

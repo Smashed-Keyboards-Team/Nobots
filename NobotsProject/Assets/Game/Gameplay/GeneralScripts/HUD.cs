@@ -9,22 +9,13 @@ public class HUD : MonoBehaviour
     public Image turboBar;
     public GameObject pausePanel;
 	public GameObject gameOverPanel;
-	public Text velocimetro;
+	public GameObject winPanel;
 	public MouseLock mouseLock;
 
 	void Start()
 	{
 		mouseLock = GetComponent<MouseLock>();
 	}
-	//public float speed;
-
-	/*
-	void Update()
-	{
-		speed = BallController.currentSpeed;
-		velocimetro.text = "Speed:" + speed;
-	}
-	*/
 
 	//Modificar barra de turbo
     public void SetTurboBar(float turbo)
@@ -41,5 +32,10 @@ public class HUD : MonoBehaviour
 	public void OpenGameOverPanel(bool open)                           
     {
         gameOverPanel.SetActive(open);
+    }
+
+	public void OpenWinPanel(bool open)                           
+    {
+        winPanel.SetActive(open);
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public GameManager gm;
-	private bool pause;
 	public HUD hud;
+	private bool pause;
 
 
 	public void MenuButton()

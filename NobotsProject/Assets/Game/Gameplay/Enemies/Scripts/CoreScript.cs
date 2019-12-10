@@ -44,7 +44,6 @@ public class CoreScript : MonoBehaviour
 	{
 		if (recentlyHit == false)
 		{
-			Debug.Log("Medistehuevon");
 			rend.sharedMaterial = material[1];
 			gm.CoreDamage(10);
 			//BallController.currentSpeed = currentSpeed * Vector3 back;

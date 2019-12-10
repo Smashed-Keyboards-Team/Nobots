@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
 
 	private bool dead = false;
 
+	public GameObject godPanel;
+	public bool godInvulnerable = false;
+	public bool godFreeMovement = false;
+
 	private Vector2 mouseDirection;
 	private Vector2 axis;
 	private bool pause;
@@ -17,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
 	private Transform cameraPosition;
 	private Transform myTransform;
-	private Rigidbody rb;
+	public Rigidbody rb;
 	private MeshFilter meshFilter;
 	private CharacterController characterController;
 	public GameManager gm;
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviour
 	void Update ()
 	{
 		//CONTROL MODO CENTINELA
-		if(isBall == false)
+		if(isBall == false && godFreeMovement == false)
 		{
 			axis.x = Input.GetAxis("Horizontal");
 			axis.y = Input.GetAxis("Vertical");
@@ -96,6 +100,13 @@ public class PlayerController : MonoBehaviour
 				meshFilter.mesh = meshes[0];
 			}
 		}
+
+		//MOVIMIENTO FREE GODMODE
+		else if (godFreeMovement == true)
+		{
+			axis.x = Input.GetAxis("Horizontal");
+			axis.y = Input.GetAxis("Vertical");
+		}
 		
 		
 		//Función de pausa
@@ -105,6 +116,14 @@ public class PlayerController : MonoBehaviour
             pause = !pause;
 
             gm.SetPause(pause);
+        }
+
+		//ENTRAR EN GODMODE
+		if (Input.GetKeyDown(KeyCode.F10))
+        {
+            Time.timeScale = 0f;
+			hud.mouseLock.ShowCursor();
+            godPanel.SetActive(true);
         }
 	}
 
@@ -175,12 +194,9 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider collision)
 	{
-        if (collision.tag == "Bullet")
+        if (collision.tag == "Bullet" && gm.win == false && godInvulnerable == false)
         {
-			dead = true;
-			hud.mouseLock.ShowCursor();
-			gm.GameOver(dead);
-			Destroy(gameObject);
+			PlayerDead();
         }
 	}
 
@@ -197,4 +213,12 @@ public class PlayerController : MonoBehaviour
         jump = true;
         centinelMoveDirection.y = jumpForce;
     }
+
+	public void PlayerDead()
+	{
+		dead = true;
+		hud.mouseLock.ShowCursor();
+		gm.GameOver(dead);
+		Destroy(gameObject);
+	}
 }
