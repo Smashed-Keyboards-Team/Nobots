@@ -7,6 +7,10 @@ TagManager:
   - Core
   - Bullet
   - BouncerUp
+  - AccelerationPlatform
+  - GameManager
+  - Canvas
+  - Manager
   layers:
   - Default
   - TransparentFX

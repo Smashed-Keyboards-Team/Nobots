@@ -17,10 +17,9 @@ public class GameManager : MonoBehaviour
 	public float winTime = 3;
 	private float winCounter;
 
-	public float turboCurrentCd;
-	public float turboCd;
-
 	public float coreHp = 100;
+
+	public float turboRecharge = 3;
 
     void Start()
     {
@@ -30,10 +29,7 @@ public class GameManager : MonoBehaviour
         //Encontrar HUD
         hud = FindObjectOfType<HUD>();
 
-        turbo = maxTurbo;
-
-		turboCurrentCd = 0;
-											
+        turbo = maxTurbo;											
     }
 
 	void Update()
@@ -41,11 +37,7 @@ public class GameManager : MonoBehaviour
 		//Recarga de turbo
 		if (turbo < maxTurbo)  
 		{
-			turboCurrentCd = turboCurrentCd + 1 * Time.deltaTime;
-			if(turboCurrentCd >= turboCd)
-			{
-				turbo = turbo + 0.2f;
-			}
+			turbo += turboRecharge * Time.deltaTime;
 		}
 		
 		//Ajustes de turbo maximo y minimo
@@ -66,10 +58,8 @@ public class GameManager : MonoBehaviour
     }
 
 	//Funcion para gastar turbo
-    public void Turbo()
+    public void TurboBarRefresh()
     {
-        turbo -= 1;
-
         hud.SetTurboBar(turbo / maxTurbo);
     }
 
